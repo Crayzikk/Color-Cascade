@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveVelocity;
     private Rigidbody2D rigidbody;
+    private SpriteRenderer spriteRenderer;
+    private PlayerAnimationManager playerAnimationManager;
     private bool isGrounded;
     private bool canMove;
     private bool canJump;
+    private bool isRinning;
+    private bool isJumping;
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
@@ -18,18 +22,22 @@ public class PlayerController : MonoBehaviour
     private void Start() 
     {
         rigidbody = GetComponent<Rigidbody2D>();    
+        playerAnimationManager = GetComponent<PlayerAnimationManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update() 
     {
         CheckGround();
 
-        if((joystick.Vertical >= 0.80 && joystick.Vertical < 0.90) && isGrounded)
+        isRinning = joystick.Horizontal != 0;
+
+        if((joystick.Vertical >= 0.60 && joystick.Vertical < 0.85) && isGrounded)
         {
             canJump = true;
             canMove = true;
         }
-        else if(joystick.Vertical > 0.90 && isGrounded)
+        else if(joystick.Vertical > 0.85 && isGrounded)
         {
             canJump = true;
             canMove = false;
@@ -38,6 +46,24 @@ public class PlayerController : MonoBehaviour
         {
             canJump = false;
             canMove = true;
+        }
+
+        if(isRinning && !isJumping)
+        {
+            playerAnimationManager.PlayWalk();
+        }
+        else if(isJumping && !isGrounded)
+        {
+            playerAnimationManager.PlayJump();
+        }
+        else if(isJumping && isGrounded)
+        {
+            playerAnimationManager.PlayLand();
+            isJumping = false;
+        }
+        else
+        {
+            playerAnimationManager.PlayIddle();
         }
     }
 
@@ -52,16 +78,23 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
+        Flip();
         rigidbody.velocity = new Vector2(joystick.Horizontal * speed, rigidbody.velocity.y);
     }
 
     private void JumpPlayer()
     {
+        isJumping = true;
         rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
     }
 
     private void CheckGround()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private void Flip()
+    {
+        spriteRenderer.flipX = joystick.Horizontal < 0;
     }
 }

@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
     private PlayerAnimationManager playerAnimationManager;
+
     private bool isGrounded;
     private bool canMove;
     private bool canJump;
     private bool isRinning;
     private bool isJumping;
 
+    [SerializeField] private LayerMask platformLayer;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
 
@@ -90,7 +92,11 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        isGrounded = (
+            Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer)
+            ||
+            Physics2D.OverlapCircle(groundCheck.position, 0.2f, platformLayer)
+        );
     }
 
     private void Flip()

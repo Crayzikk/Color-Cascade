@@ -30,42 +30,45 @@ public class PlayerController : MonoBehaviour
 
     private void Update() 
     {
-        CheckGround();
+        if(!EndLevel.levelComplete)
+        {
+            CheckGround();
 
-        isRinning = joystick.Horizontal != 0;
+            isRinning = joystick.Horizontal != 0;
 
-        if((joystick.Vertical >= 0.60 && joystick.Vertical < 0.85) && isGrounded)
-        {
-            canJump = true;
-            canMove = true;
-        }
-        else if(joystick.Vertical > 0.85 && isGrounded)
-        {
-            canJump = true;
-            canMove = false;
-        }
-        else
-        {
-            canJump = false;
-            canMove = true;
-        }
+            if(((joystick.Vertical >= 0.60 && joystick.Vertical < 0.85) || (joystick.Vertical <= -0.60 && joystick.Vertical > -0.85)) && isGrounded)
+            {
+                canJump = true;
+                canMove = true;
+            }
+            else if(joystick.Vertical > 0.85 && isGrounded)
+            {
+                canJump = true;
+                canMove = false;
+            }
+            else
+            {
+                canJump = false;
+                canMove = true;
+            }
 
-        if(isRinning && !isJumping)
-        {
-            playerAnimationManager.PlayWalk();
-        }
-        else if(isJumping && !isGrounded)
-        {
-            playerAnimationManager.PlayJump();
-        }
-        else if(isJumping && isGrounded)
-        {
-            playerAnimationManager.PlayLand();
-            isJumping = false;
-        }
-        else
-        {
-            playerAnimationManager.PlayIddle();
+            if(isRinning && !isJumping)
+            {
+                playerAnimationManager.PlayWalk();
+            }
+            else if(isJumping && !isGrounded)
+            {
+                playerAnimationManager.PlayJump();
+            }
+            else if(isJumping && isGrounded)
+            {
+                playerAnimationManager.PlayLand();
+                isJumping = false;
+            }
+            else
+            {
+                playerAnimationManager.PlayIddle();
+            }
         }
     }
 
@@ -92,7 +95,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        isGrounded = (
+        isGrounded = 
+        (
             Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer)
             ||
             Physics2D.OverlapCircle(groundCheck.position, 0.2f, platformLayer)

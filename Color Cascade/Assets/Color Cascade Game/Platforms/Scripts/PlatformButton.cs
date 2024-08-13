@@ -3,12 +3,12 @@ using UnityEngine;
 public class PlatformButton : MonoBehaviour
 {
     [SerializeField] private ColorPlatform colorPlatform;
-    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject gameObjectPlatform;
     [SerializeField] private Sprite blueSprite;
     [SerializeField] private Sprite pinkSprite;
     [SerializeField] private Sprite defaultSprite;
 
+    private SpriteRenderer spriteRenderer;
     private PlatformButtonAnimation platformButtonAnimation;
     private string bluePlatform;
     private string pinkPlatform;
@@ -20,6 +20,7 @@ public class PlatformButton : MonoBehaviour
         pinkPlatform = "PinkPlatform";
         defaultPlatform = "NonePlatform";
 
+        spriteRenderer = gameObjectPlatform.GetComponent<SpriteRenderer>();
         platformButtonAnimation = GetComponentInChildren<PlatformButtonAnimation>();
     }
 

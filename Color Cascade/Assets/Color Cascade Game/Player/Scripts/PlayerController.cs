@@ -2,27 +2,29 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-    public float jumpForce;
-    public Joystick joystick;
-
+    private Joystick joystick;
     private Vector2 moveVelocity;
     private Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
     private PlayerAnimationManager playerAnimationManager;
 
+    private bool checkPlatformEffector;
     private bool isGrounded;
     private bool canMove;
     private bool canJump;
     private bool isRinning;
     private bool isJumping;
 
+    [SerializeField] public float speed;
+    [SerializeField] public float jumpForce;
+    [SerializeField] public string tagJoystic;
     [SerializeField] private LayerMask platformLayer;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
 
     private void Start() 
     {
+        joystick = GameObject.FindWithTag(tagJoystic).GetComponent<FixedJoystick>();
         rigidbody = GetComponent<Rigidbody2D>();    
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
         if(canMove)
             MovePlayer();
 
-        if(canJump)
+        if(canJump && !checkPlatformEffector)
             JumpPlayer();
     }
 
@@ -106,5 +108,13 @@ public class PlayerController : MonoBehaviour
     private void Flip()
     {
         spriteRenderer.flipX = joystick.Horizontal < 0;
+    }
+
+    private void ReloadCheckPlatformEffector() => checkPlatformEffector = false;
+
+    public void CheckPlatformEffectorWorked()
+    {
+        checkPlatformEffector = true;
+        Invoke("ReloadCheckPlatformEffector", 0.5f);
     }
 }

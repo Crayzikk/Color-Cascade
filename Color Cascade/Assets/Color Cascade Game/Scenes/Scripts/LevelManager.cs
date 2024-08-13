@@ -5,7 +5,6 @@ public static class LevelManager
 {
     public static void LoadNextLevel()
     {
-       
         int nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
 
         if(nextLevel < SceneManager.sceneCountInBuildSettings)

@@ -7,12 +7,14 @@ public class TransitionLevels : MonoBehaviour
 
     private void Start() 
     {
+        SetSortingJoystic(10);
         animator = GetComponent<Animator>();
         SetAnimation(true);
-        joysicCanvas.sortingOrder = 15;
+        Invoke("HideJoystics", 0.5f);
     }
 
-    public void HideJoystic() => joysicCanvas.sortingOrder = 10;
+    public void SetSortingJoystic(int value) => joysicCanvas.sortingOrder = value;
     public void SetTransitionTrue() => EndLevel.transitionComplete = true;
     public void SetAnimation(bool state) => animator.SetBool("Transition", state);
+    public void HideJoystics() => SetSortingJoystic(15);
 }

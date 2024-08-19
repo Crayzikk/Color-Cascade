@@ -9,9 +9,24 @@ EditorBuildSettings:
     path: Assets/Color Cascade Game/Scenes/Menu.unity
     guid: 410033d55d02c17418648098ef4c144c
   - enabled: 1
-    path: Assets/Color Cascade Game/Scenes/Levels/TechingLevel.unity
-    guid: b21b87ca9d4c4744ba6264a43352a7b2
-  - enabled: 1
     path: Assets/Color Cascade Game/Scenes/Levels/1 Level.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/2 Level.unity
+    guid: cc114e408eec7894fa2b55473536e608
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/3 Level.unity
+    guid: 3db273e25a4115a41bcc1f73410079c4
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/4 Level.unity
+    guid: 5fee573e57cc7084bb855040b3448883
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/6 Level.unity
+    guid: 698df5c895578294faf19a119346c9e4
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/7 Level.unity
+    guid: d3fcfb50650dd844c9f9bc066ce85bac
+  - enabled: 1
+    path: Assets/Color Cascade Game/Scenes/Levels/8 Level.unity
+    guid: 822288698f45bdb4baf276537cf21172
   m_configObjects: {}

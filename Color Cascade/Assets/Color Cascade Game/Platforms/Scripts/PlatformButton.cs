@@ -7,7 +7,8 @@ public class PlatformButton : MonoBehaviour
     [SerializeField] private Sprite blueSprite;
     [SerializeField] private Sprite pinkSprite;
     [SerializeField] private Sprite defaultSprite;
-
+    
+    private Collider2D collider;
     private SpriteRenderer spriteRenderer;
     private PlatformButtonAnimation platformButtonAnimation;
     private string bluePlatform;
@@ -20,6 +21,7 @@ public class PlatformButton : MonoBehaviour
         pinkPlatform = "PinkPlatform";
         defaultPlatform = "NonePlatform";
 
+        collider = gameObjectPlatform.GetComponent<Collider2D>();
         spriteRenderer = gameObjectPlatform.GetComponent<SpriteRenderer>();
         platformButtonAnimation = GetComponentInChildren<PlatformButtonAnimation>();
     }
@@ -28,6 +30,7 @@ public class PlatformButton : MonoBehaviour
     {
         if(platformButtonAnimation.playerActiveButton)
         {
+            collider.enabled = true;
             platformButtonAnimation.ButtonActive();
             if (colorPlatform == ColorPlatform.Pink)
             {
@@ -42,6 +45,7 @@ public class PlatformButton : MonoBehaviour
         }
         else
         {
+            collider.enabled = false;
             platformButtonAnimation.ButtonDeactive();
             SetSpriteRenderer(defaultSprite);
             SetLayerMask(defaultPlatform);

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool canJump;
     private bool isRinning;
     private bool isJumping;
+    private bool playerFellDown;
 
     [SerializeField] public float speed;
     [SerializeField] public float jumpForce;
@@ -32,13 +33,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update() 
     {
-        if(!EndLevel.levelComplete)
+        if (!EndLevel.levelComplete)
         {
             CheckGround();
 
             isRinning = joystick.Horizontal != 0;
 
-            if(((joystick.Vertical >= 0.60 && joystick.Vertical < 0.85) || (joystick.Vertical <= -0.60 && joystick.Vertical > -0.85)) && isGrounded)
+            if(((joystick.Vertical >= 0.50 && joystick.Vertical < 0.85) || (joystick.Vertical <= -0.50 && joystick.Vertical > -0.85)) && isGrounded)
             {
                 canJump = true;
                 canMove = true;
@@ -53,8 +54,8 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
                 canMove = true;
             }
-
-            if(isRinning && !isJumping)
+            
+            if(isRinning && !isJumping && isGrounded)
             {
                 playerAnimationManager.PlayWalk();
             }
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    
     private void FixedUpdate() 
     {
         if(canMove)
@@ -99,9 +100,9 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = 
         (
-            Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer)
+            Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer)
             ||
-            Physics2D.OverlapCircle(groundCheck.position, 0.2f, platformLayer)
+            Physics2D.OverlapCircle(groundCheck.position, 0.1f, platformLayer)
         );
     }
 

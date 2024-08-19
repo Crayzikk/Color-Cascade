@@ -33,6 +33,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private void SetAnimation(int state)
     {
-        animator.SetInteger(varName, state);
+        if(animator != null && varName != null)
+            animator.SetInteger(varName, state);
     }
 }
